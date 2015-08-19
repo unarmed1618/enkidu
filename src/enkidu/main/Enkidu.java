@@ -7,7 +7,7 @@ public class Enkidu {
 		System.out.println("Attempting to start up Enkidu");
 		//Eridug world = new Eridug();
 		final Enki player = new Enki();
-		EnkiduView ev;
+		//EnkiduView ev;
 		//player.inputTestLoop();
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
