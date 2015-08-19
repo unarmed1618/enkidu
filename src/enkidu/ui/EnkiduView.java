@@ -14,11 +14,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import enkidu.main.Enki;
+import enkidu.main.Lapis;
 
 public class EnkiduView extends JFrame implements KeyListener, ActionListener{
-	private Enki player;
+	private static Enki player;
 	JTextArea displayArea;
     JTextField typingArea;
+    static Lapis locale;
     static final String newline = System.getProperty("line.separator");
 	/**
 	 * 
@@ -28,9 +30,12 @@ public class EnkiduView extends JFrame implements KeyListener, ActionListener{
 		super(name);
 		this.player = player;
 	}
-	private static void updateView(){
-Lapis locale = player.getLocale();
-// draw the locale, draw the player and entities on top of it, draw it all up
+	
+	
+	private void updateView(){
+		locale = player.getLocale();
+		displayArea.setText(locale.draw(player));
+		// draw the locale, draw the player and entities on top of it, draw it all up
 }
 	
 	@Override
@@ -57,9 +62,12 @@ Lapis locale = player.getLocale();
 		String key = String.valueOf(e.getKeyChar());
 		// TODO Auto-generated method stub
 		if(player.getMapping().containsKey(key)){
-			displayArea.setText(player.getMapping().get(key));
+			if(player.act(key))
+				updateView();
+			//displayArea.setText(player.getMapping().get(key));
 		}
 		typingArea.setText("");
+		updateView();
 	}
 
 	@Override

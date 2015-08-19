@@ -7,14 +7,48 @@ private Lapis north;
 private Lapis south;
 private Lapis east;
 private Lapis west;
-private Character[][] map;
-private Boolean[][] mask;
+public Character[][] map;
+public Boolean[][] mask;
 public Lapis(){
 	map = new Character[32][32];
 	mask = new Boolean[32][32];
-
+	
 }
-
+public void populateMe(){
+	for(int i = 0;i<32;i++){
+		for(int j = 0; j<32;j++){
+			map[i][j] = ' ';
+			mask[i][j] = true;
+		}
+	}
+}
+public String drawEmpty(){
+	StringBuilder result = new StringBuilder();
+	for(int y= 0;y<32;y++){
+		for(int x=0;x<32;x++)
+		{
+			result.append(map[x][y]);
+		}
+		result.append("/n");
+	}
+	return result.toString();
+}
+public String draw(Enki player){
+	StringBuilder result = new StringBuilder();
+	for(int y= 0;y<32;y++){
+		for(int x=0;x<32;x++)
+		{
+			if(player.getX() ==x&&player.getY()==y)
+				result.append(player.getAvatar());
+			else
+				result.append(map[x][y]);
+			result.append(' ');
+		}
+		result.append('|');
+		result.append("\n");
+	}
+	return result.toString();
+}
 	/**
 	 * 
 	 */
