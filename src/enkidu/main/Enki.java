@@ -1,16 +1,19 @@
 package enkidu.main;
 
-
-import java.io.Console;
-
-import java.io.InputStream;
 import java.util.HashMap;
 
-public class Enki {
-	private InputStream in;
-	private HashMap<Byte, String> mapping;
-	private Console c;
 
+
+
+public class Enki {
+HashMap<String, String> mapping;
+	public Enki(){
+		mapping = new HashMap<String, String>();
+		mapping.put("a", "Left");
+		mapping.put("s", "Down");
+		mapping.put("d", "Right");
+		mapping.put("w", "Up");
+	}
 	public void play(){
 	}
 	public void inputTestLoop(){
@@ -24,5 +27,9 @@ public class Enki {
 					//k = 107
 					//l = 108
 		}
+	}
+	public HashMap<String,String> getMapping() {
+		
+		return mapping;
 	}
 }
