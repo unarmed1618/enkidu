@@ -28,7 +28,10 @@ public class EnkiduView extends JFrame implements KeyListener, ActionListener{
 		super(name);
 		this.player = player;
 	}
-	
+	private static void updateView(){
+Lapis locale = player.getLocale();
+// draw the locale, draw the player and entities on top of it, draw it all up
+}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
