@@ -3,25 +3,26 @@ package enkidu.main;
 import java.io.Serializable;
 
 public class Lapis implements Serializable{
-	public static final int LAPIS_WIDTH = 64;
+	public static final int LAPIS_WIDTH = 32;
 	public static final int LAPIS_HEIGHT = 32;
-
+	public static final boolean DRAW_TERRAIN_ONLY = false;
 	private Lapis north;
 	private Lapis south;
 	private Lapis east;
 	private Lapis west;
 	public Character[][] map;
-	public Boolean[][] mask;
+	public Character[][] terrain;
 	public Lapis(){
 		map = new Character[LAPIS_WIDTH][LAPIS_HEIGHT];
-		mask = new Boolean[LAPIS_WIDTH][LAPIS_HEIGHT];
+		terrain = new Character[LAPIS_WIDTH][LAPIS_HEIGHT];
 
 	}
 	public void populateMe() {
 		for(int y = 0;y<LAPIS_HEIGHT;y++){
 			for(int x = 0; x<LAPIS_WIDTH;x++){
-				map[x][y] = ' ';
-				mask[x][y] = true;
+				map[x][y] = x==0||x==LAPIS_WIDTH-1||y==0||y==LAPIS_HEIGHT-1?'+':' ';
+				terrain[x][y] = x==0||x==LAPIS_WIDTH-1||y==0||y==LAPIS_HEIGHT-1?'0':'1';
+				//Make a box by default;
 			}
 		}
 	}
@@ -32,7 +33,7 @@ public class Lapis implements Serializable{
 			{
 				result.append(map[x][y]);
 			}
-			result.append("/n");
+			result.append("\n");
 		}
 		return result.toString();
 	}
@@ -44,10 +45,9 @@ public class Lapis implements Serializable{
 				if(player.getX() ==x&&player.getY()==y)
 					result.append(player.getAvatar());
 				else
-					result.append(map[x][y]);
+					result.append(DRAW_TERRAIN_ONLY?terrain[x][y]:map[x][y]);
 				result.append(' ');
 			}
-			result.append('|');
 			result.append("\n");
 		}
 		return result.toString();

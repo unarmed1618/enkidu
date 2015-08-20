@@ -6,12 +6,13 @@ public class Entity {
 	private Integer xpos;
 	private Integer ypos;
 	private Lapis locale;
-	
+	private Conveyance conveyance;
 	public Entity(int x, int y, char c,Lapis locale) {
 		avatar = c;
 		xpos = x;
 		ypos = y;
 		this.locale = locale;
+		conveyance = new Conveyance();
 		// TODO Auto-generated constructor stub
 	}
 	public void move(String input){
@@ -45,10 +46,10 @@ public class Entity {
 			ymod = +1;
 			break;
 		case "e":
-			xmod = -1;
+			xmod = +1;
 			break;
 		case "w":
-			xmod = +1;
+			xmod = -1;
 			break;
 		}
 		if(action.contains("a"))
@@ -59,7 +60,7 @@ public class Entity {
 		else if(action.contains("m"))
 		{				
 			//System.out.println(xpos + "," + ypos);
-			return locale.mask[xpos+xmod][ypos +ymod];
+			return conveyance.contains(locale.terrain[xpos+xmod][ypos+ymod]);
 		}
 		return false;
 	}
@@ -80,6 +81,10 @@ public class Entity {
 			}
 			else
 				return false;
+		}
+		else if(action.contains("r")) {
+			//Edit powers
+			
 		}
 		return false;
 		// TODO Auto-generated method stub

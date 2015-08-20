@@ -20,6 +20,9 @@ private HashMap<String, String> mapping;
 		mapping.put("k", "as");
 		mapping.put("l", "ae");
 		mapping.put("i", "an");
+		mapping.put("r", "wr");
+		mapping.put("t", "tr");
+		mapping.put("u", "ur");
 		
 		
 	}

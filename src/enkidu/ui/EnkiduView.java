@@ -2,6 +2,7 @@ package enkidu.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -96,7 +97,7 @@ public class EnkiduView extends JFrame implements KeyListener, ActionListener{
 
 		typingArea = new JTextField(0);
 		typingArea.addKeyListener(this);
-
+		
 		//Uncomment this if you wish to turn off focus
 		//traversal.  The focus subsystem consumes
 		//focus traversal keys, such as Tab and Shift Tab.
@@ -107,7 +108,8 @@ public class EnkiduView extends JFrame implements KeyListener, ActionListener{
 
 		displayArea = new JTextArea();
 		displayArea.setEditable(false);
-		displayArea.setPreferredSize(new Dimension(400,400));
+		displayArea.setPreferredSize(new Dimension(445,385));
+		displayArea.setFont(Font.decode("Courier 12"));
 		typingArea.setPreferredSize(new Dimension(0,0));
 		getContentPane().add(typingArea, BorderLayout.BEFORE_FIRST_LINE);
 
