@@ -4,8 +4,13 @@ import java.util.HashMap;
 
 
 
-
-public class Enki extends Entity{
+/**
+ * This is basically the player class.
+ * 
+ * @author Emilydarrow
+ *
+ */
+public class Enki extends Entity implements Interactable{
 private HashMap<String, String> mapping;
 
 	public Enki(){
@@ -20,9 +25,10 @@ private HashMap<String, String> mapping;
 		mapping.put("k", "as");
 		mapping.put("l", "ae");
 		mapping.put("i", "an");
-		mapping.put("r", "wr");
-		mapping.put("t", "tr");
-		mapping.put("u", "ur");
+		mapping.put("r", "vr"); //Visual write
+		mapping.put("t", "tr"); //Terrain write
+		mapping.put("u", "ur"); //Unicode write
+		mapping.put("e", "lr"); //Entity(living) Write
 		
 		
 	}
@@ -31,5 +37,15 @@ private HashMap<String, String> mapping;
 	public HashMap<String,String> getMapping() {
 		return mapping;
 	}
+	@Override
+	public String interactWith() {
+		// TODO Auto-generated method stub
+		return "This is a player";
+	}
+	public void sendWrite(char keyChar, int x, int y) {
+		// TODO Auto-generated method stub
+		super.getLocale().sendWrite(keyChar, x,y);
+	}
+	
 	
 }

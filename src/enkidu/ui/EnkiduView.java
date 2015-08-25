@@ -60,10 +60,16 @@ public class EnkiduView extends JFrame implements KeyListener, ActionListener{
 	public void keyPressed(KeyEvent e) {
 		String key = String.valueOf(e.getKeyChar());
 		// TODO Auto-generated method stub
-		if(player.getMapping().containsKey(key)){
+		if(player.isWriting||player.getMapping().containsKey(key)){
+			if(player.isWriting)
+			{
+				player.sendWrite(e.getKeyChar(),player.getX(),player.getY());
+			}
+			else{
 			if(player.act(player.getMapping().get(key)))
 				updateView();
 			//displayArea.setText(player.getMapping().get(key));
+			}
 		}
 		typingArea.setText("");
 		updateView();

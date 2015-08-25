@@ -1,6 +1,7 @@
 package enkidu.main;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class Lapis implements Serializable{
 	public static final int LAPIS_WIDTH = 32;
@@ -12,7 +13,10 @@ public class Lapis implements Serializable{
 	private Lapis west;
 	public Character[][] map;
 	public Character[][] terrain;
+	public Entity[] entities;
+	public String permissions;
 	public Lapis(){
+		permissions = "a";
 		map = new Character[LAPIS_WIDTH][LAPIS_HEIGHT];
 		terrain = new Character[LAPIS_WIDTH][LAPIS_HEIGHT];
 
@@ -52,8 +56,58 @@ public class Lapis implements Serializable{
 		}
 		return result.toString();
 	}
-	public String drawFull(Enki[] entities) {
-		return "";
+	public String drawFull() {
+		class Vector {
+			int x;
+			int y;
+			public Vector(int x, int y){
+				this.x= x;
+				this.y = y;
+			}
+			@Override
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + x;
+				result = prime * result + y;
+				return result;
+			}
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj)
+					return true;
+				if (obj == null)
+					return false;
+				if (getClass() != obj.getClass())
+					return false;
+				Vector other = (Vector) obj;
+				if (x != other.x)
+					return false;
+				if (y != other.y)
+					return false;
+				return true;
+			}
+			
+		}
+		StringBuilder result = new StringBuilder();
+		HashMap<Vector, Character> entityMap = new HashMap<Vector, Character>();
+		for(Entity e:entities){
+			if(e.isVisible()){
+				entityMap.put(new Vector(e.getX(), e.getY()), e.getAvatar());
+			}
+		}
+		for(int y= 0;y<LAPIS_HEIGHT;y++){
+			for(int x=0;x<LAPIS_WIDTH;x++)
+			{
+				if(entityMap.containsKey(new Vector(x, y)))
+					result.append(entityMap.get(new Vector(x, y)));
+				else
+					result.append(DRAW_TERRAIN_ONLY?terrain[x][y]:map[x][y]);
+				result.append(' ');
+			}
+			result.append("\n");
+		}
+		return result.toString();
 	}
 	/**
 	 * 
@@ -71,7 +125,17 @@ public class Lapis implements Serializable{
 	public Lapis getWest() {
 		return west;
 	}
+	public boolean permits(Character avatar) {
+		return permissions.contains(avatar.toString());
+		
+	}
+	public void sendWrite(char keyChar, int x, int y) {
+		this.map[x][y] = keyChar;
+		// TODO Auto-generated method stub
+		
+	}
 
 
-
+	
 }
+

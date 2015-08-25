@@ -1,12 +1,18 @@
 package enkidu.main;
 
-public class Entity {
+public class Entity{
 	private char avatar;
 
 	private Integer xpos;
 	private Integer ypos;
 	private Lapis locale;
 	private Conveyance conveyance;
+	public boolean isWriting;
+	public int writeXmod;
+	public int writeYmod;
+	private String lastAction;
+
+	private String lastLastAction;
 	public Entity(int x, int y, char c,Lapis locale) {
 		avatar = c;
 		xpos = x;
@@ -54,6 +60,8 @@ public class Entity {
 		}
 		if(action.contains("a"))
 		{
+			if(lastAction.contains("r"))
+				return true;
 			//Acting -- Logic not yet managed.
 			return false;
 		} 
@@ -62,12 +70,20 @@ public class Entity {
 			//System.out.println(xpos + "," + ypos);
 			return conveyance.contains(locale.terrain[xpos+xmod][ypos+ymod]);
 		}
+		else if(action.contains("r")) //Writing
+		{
+			if(locale.permits(this.getAvatar()))
+				return true;
+			else
+				return false; //Writing
+		}
 		return false;
 	}
 	public boolean act(String action) {
 	
 		if(action.contains("a"))
 		{
+			
 			//Acting
 			return false;
 		} 
@@ -77,6 +93,8 @@ public class Entity {
 			if(canAct(action))
 			{	
 				move(action);
+				this.lastLastAction = this.lastAction;
+				this.lastAction=action;
 				return true;
 			}
 			else
@@ -84,6 +102,7 @@ public class Entity {
 		}
 		else if(action.contains("r")) {
 			//Edit powers
+			return true;
 			
 		}
 		return false;
@@ -92,5 +111,9 @@ public class Entity {
 	}
 	public Lapis getLocale() {
 		return locale;
+	}
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
