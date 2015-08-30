@@ -1,6 +1,7 @@
 package enkidu.main;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Lapis implements Serializable{
@@ -15,11 +16,23 @@ public class Lapis implements Serializable{
 	public Character[][] terrain;
 	public Entity[] entities;
 	public String permissions;
+	public String meta;
 	public Lapis(){
 		permissions = "a";
 		map = new Character[LAPIS_WIDTH][LAPIS_HEIGHT];
 		terrain = new Character[LAPIS_WIDTH][LAPIS_HEIGHT];
-
+		meta = "nop";
+	}
+	public Lapis(byte[] data) {
+		String fatass = new String(data);
+		for(int y = 0;y<LAPIS_HEIGHT;y++){
+			for(int x=0; x<LAPIS_WIDTH;x++){
+				map[x][y] = fatass.charAt(x+y*LAPIS_WIDTH);
+				terrain[x][y] = fatass.charAt(x+y*LAPIS_WIDTH+LAPIS_WIDTH*LAPIS_HEIGHT);
+			}
+		}
+		meta = fatass.substring(2*LAPIS_WIDTH*LAPIS_HEIGHT);
+		// TODO Auto-generated constructor stub
 	}
 	public void populateMe() {
 		for(int y = 0;y<LAPIS_HEIGHT;y++){
@@ -29,6 +42,29 @@ public class Lapis implements Serializable{
 				//Make a box by default;
 			}
 		}
+	}
+	private String terrainString(){
+		StringBuilder result = new StringBuilder();
+		for(int y= 0;y<LAPIS_HEIGHT;y++){
+			for(int x=0;x<LAPIS_WIDTH;x++)
+			{
+				result.append(terrain[x][y]);
+			}
+		}
+		return result.toString();
+	}
+	private String mapString(){
+		StringBuilder result = new StringBuilder();
+		for(int y= 0;y<LAPIS_HEIGHT;y++){
+			for(int x=0;x<LAPIS_WIDTH;x++)
+			{
+				result.append(map[x][y]);
+			}
+		}
+		return result.toString();
+	}
+	private String metaString(){
+		return this.meta;
 	}
 	public String drawEmpty(){
 		StringBuilder result = new StringBuilder();
@@ -87,7 +123,7 @@ public class Lapis implements Serializable{
 					return false;
 				return true;
 			}
-			
+
 		}
 		StringBuilder result = new StringBuilder();
 		HashMap<Vector, Character> entityMap = new HashMap<Vector, Character>();
@@ -127,15 +163,20 @@ public class Lapis implements Serializable{
 	}
 	public boolean permits(Character avatar) {
 		return permissions.contains(avatar.toString());
-		
+
 	}
 	public void sendWrite(char keyChar, int x, int y) {
 		this.map[x][y] = keyChar;
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
+	public byte[] toBytes(){
+		StringBuilder buff = new StringBuilder();
+		buff.append(this.mapString());
+		buff.append(this.terrainString());
+		buff.append(this.metaString());
+		return buff.toString().getBytes();
+	}
 
-	
 }
 
